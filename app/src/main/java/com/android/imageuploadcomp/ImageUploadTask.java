@@ -1,8 +1,11 @@
 package com.android.imageuploadcomp;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.imageuploadcomp.Model.ImageUploadResponse;
@@ -18,14 +21,17 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+@SuppressLint("StaticFieldLeak")
 public class ImageUploadTask extends AsyncTask<byte[], Void, String> {
 
     private static final String TAG = "ImageUploadTask";
     private static final String API_BASE_URL = "https://www.google.com/";
     private final ImageUploadService service;
-    private Activity context;
+    private final Activity context;
+    private final ProgressBar progressBar;
 
-    public ImageUploadTask(Activity context) {
+    public ImageUploadTask(Activity context, ProgressBar progressBar) {
+        this.progressBar = progressBar;
         this.context = context;
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
@@ -33,6 +39,13 @@ public class ImageUploadTask extends AsyncTask<byte[], Void, String> {
                 .build();
 
         service = retrofit.create(ImageUploadService.class);
+    }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        // Show the progress bar before starting the task
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -64,6 +77,14 @@ public class ImageUploadTask extends AsyncTask<byte[], Void, String> {
         } catch (IOException e) {
             throw e;
         }
+    }
+    @Override
+    protected void onPostExecute(String result) {
+        super.onPostExecute(result);
+        // Hide the progress bar after the task is completed
+        progressBar.setVisibility(View.INVISIBLE);
+        // Handle the result if needed
+        // You may show a toast, update UI, etc.
     }
 
     private void showToast(String message) {

@@ -1,56 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="12dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:padding="12dp">
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="invisible" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        app:srcCompat="@drawable/add_a_photo"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp"
+        app:srcCompat="@drawable/add_a_photo" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:textAllCaps="false"
         android:id="@+id/btnSelectImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/select_image"
         android:layout_below="@id/tvFileInfo"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp"
+        android:text="@string/select_image"
+        android:textAllCaps="false" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:layout_below="@id/imageView"
         android:id="@+id/tvFileInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/imageView"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="8dp"/>
+        android:layout_marginTop="8dp" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:textAllCaps="false"
-        android:visibility="gone"
         android:id="@+id/btnPreview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/preview"
         android:layout_below="@id/btnSelectImage"
+        android:layout_marginTop="16dp"
         android:layout_toStartOf="@id/btnSelectImage"
-        android:layout_marginTop="16dp"/>
+        android:text="@string/preview"
+        android:textAllCaps="false"
+        android:visibility="gone" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:textAllCaps="false"
-        android:visibility="gone"
         android:id="@+id/btnSubmit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/submit"
-        android:layout_toEndOf="@id/btnSelectImage"
         android:layout_below="@id/btnSelectImage"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp"
+        android:layout_toEndOf="@id/btnSelectImage"
+        android:text="@string/submit"
+        android:textAllCaps="false"
+        android:visibility="gone" />
 
 </RelativeLayout>

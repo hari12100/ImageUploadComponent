@@ -14,6 +14,7 @@ import android.provider.OpenableColumns;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.webkit.MimeTypeMap;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -34,7 +35,7 @@ public class ImageUploadComponent extends RelativeLayout {
     private static final int PICK_IMAGE_REQUEST = 1;
     private static final int CAMERA_CAPTURE_REQUEST = 2;
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 3;
-    private Activity mActivity;
+    private final Activity mActivity;
 
     public interface OnImageSelectedListener {
         void onImageSelected(Uri imageUri);
@@ -43,8 +44,8 @@ public class ImageUploadComponent extends RelativeLayout {
     private OnImageSelectedListener onImageSelectedListener;
     private AppCompatButton btnPreview, btnSubmit;
     private AppCompatTextView tvFileInfo;
-
     private AppCompatImageView imageView;
+    private ProgressBar progressBar;
     private Uri selectedImageUri;
 
     public ImageUploadComponent(Context context) {
@@ -85,6 +86,7 @@ public class ImageUploadComponent extends RelativeLayout {
         btnSubmit = findViewById(R.id.btnSubmit);
         tvFileInfo = findViewById(R.id.tvFileInfo);
         imageView = findViewById(R.id.imageView);
+        progressBar = findViewById(R.id.progressBar);
 
         imageView.setOnClickListener(v -> selectImage());
         btnSelectImage.setOnClickListener(v -> selectImage());
@@ -98,9 +100,8 @@ public class ImageUploadComponent extends RelativeLayout {
         btnSubmit.setOnClickListener(v -> {
             if (selectedImageUri != null) {
                 byte[] imageData = ImageUtils.convertUriToByteArray(mActivity, selectedImageUri, 800, 600);
-                ;
 
-                ImageUploadTask uploadTask = new ImageUploadTask(mActivity);
+                ImageUploadTask uploadTask = new ImageUploadTask(mActivity,progressBar);
                 uploadTask.execute(imageData);
             }
         });
